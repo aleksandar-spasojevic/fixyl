@@ -237,10 +237,12 @@ export class FixDefinitionParser {
                     const groupDef = msgDef.groups.get(inst.name);
                     if (groupDef) {
                         const arrayData = data[inst.name] as any[];
-                        fixMsgBody += `${msgFieldDef.number}=${arrayData.length}${SOH}`;
-                        arrayData.forEach(inst => {
-                            fixMsgBody += this.encodeToFixBody(groupDef, inst, parameters)
-                        })
+                        if (arrayData.length > 0) {
+                             fixMsgBody += `${msgFieldDef.number}=${arrayData.length}${SOH}`;
+                             arrayData.forEach(inst => {
+                                 fixMsgBody += this.encodeToFixBody(groupDef, inst, parameters)
+                             })
+                        }
                     }
                     break;
                 default:
